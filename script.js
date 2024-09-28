@@ -7,8 +7,20 @@ function getComputerChoice() {
     return choice;
 }
 
-function playRound(humanSelection) {
-    let computerSelection = getComputerChoice();
+function getHumanChoice() {
+    let choice = prompt("Enter your choice (rock, paper, scissor): ");
+    choice = choice.toLowerCase();
+    if(choice === "rock") {
+        return 0;
+    }
+    else if(choice === "paper") {
+        return 1;
+    }
+    return 2;
+}
+
+
+function playRound(humanSelection, computerSelection) {
     if(humanSelection === 0) {
         if(computerSelection === 1) {
             computerScore++;
@@ -35,27 +47,20 @@ function playRound(humanSelection) {
     }
 }
 
-/* * * * * * *
+for(let i = 0; i < 5; i++) {
+    humanSelection = getHumanChoice();
+    computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+}
 
-Adding event listeners
+console.log(humanScore + ' : ' + computerScore);
 
-* * * * * * */
-
-const btns = document.querySelectorAll("button");
-const scoreBoard = document.querySelector("#score");
-console.log(scoreBoard);
-
-btns.forEach((btn) => {
-    btn.addEventListener('click', (humanSelection) => {
-        for(let i = 1; i <= 3; i++) {
-            if(btn.classList.contains(`btn-${i}`)) {
-                humanSelection = i - 1;
-                break;
-            }
-        }
-        console.log(humanSelection);
-        playRound(humanSelection);
-        console.log(humanScore + ' : ' + computerScore);
-        scoreBoard.textContent = humanScore + ' : ' + computerScore;
-    });
-});
+if(humanScore > computerScore) {
+    console.log("You won!");
+}
+else if(humanScore < computerScore) {
+    console.log("Game over!");
+}
+else {
+    console.log("It's a draw!");
+}
